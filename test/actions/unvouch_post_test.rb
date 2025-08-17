@@ -13,7 +13,7 @@ class TestUnvouchPost < Minitest::Test
     champion = User.where(champion: true).first
 
     assert_raises NotFound do
-      Actions::UnvouchForPost.new(929_022_929_292, champion).run
+      Actions::UnvouchForPost.new(post_id: 929_022_929_292, username: champion, notes: 'foo bar').run
     end
   end
 
@@ -26,7 +26,7 @@ class TestUnvouchPost < Minitest::Test
     refute_nil champion
 
     champ2 = User.create(username: 'test_champ2', display_name: 'Test Champ 2', champion: true)
-    Actions::VouchForPost.new(anon_post.id, champ2.username).run
+    Actions::VouchForPost.new(post_id: anon_post.id, username: champ2.username, notes: 'baz quux').run
     anon_post = Post[anon_post.id] # reload
     refute_nil anon_post
     assert anon_post.vouched?
@@ -34,7 +34,7 @@ class TestUnvouchPost < Minitest::Test
     refute anon_post.vouched_by?(champion)
 
     assert_raises BadRequest do
-      Actions::UnvouchForPost.new(anon_post.id, champion.username).run
+      Actions::UnvouchForPost.new(post_id: anon_post.id, username: champion.username, notes: 'blah blah').run
     end
   end
 
@@ -49,13 +49,13 @@ class TestUnvouchPost < Minitest::Test
     refute_nil champ
     assert champ.champion
 
-    Actions::VouchForPost.new(anon_post.id, champ.username).run
+    Actions::VouchForPost.new(post_id: anon_post.id, username: champ.username, notes: 'blah blah').run
     anon_post = Post[anon_post.id] # reload
     assert anon_post.vouched?
     assert anon_post.vouched_by? champ
 
     # Now let's unvouch
-    Actions::UnvouchForPost.new(anon_post.id, champ.username).run
+    Actions::UnvouchForPost.new(post_id: anon_post.id, username: champ.username, notes: 'changed my mind').run
     anon_post = Post[anon_post.id] # reload
     refute anon_post.vouched?
     refute anon_post.vouched_by? champ
@@ -65,9 +65,10 @@ class TestUnvouchPost < Minitest::Test
     assert_equal 2, pe_events.count
     assert pe_events[0].post_vouched?
     assert pe_events[1].post_unvouched?
+    assert_equal 'changed my mind', pe_events[1].notes
 
     # Vouch again
-    Actions::VouchForPost.new(anon_post.id, champ.username).run
+    Actions::VouchForPost.new(post_id: anon_post.id, username: champ.username, notes: 'changing mind back').run
     anon_post = Post[anon_post.id] # reload
     assert anon_post.vouched?
     assert anon_post.vouched_by? champ

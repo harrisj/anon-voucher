@@ -13,7 +13,8 @@ class TestVouchPost < Minitest::Test
     champion = User.where(champion: true).first
 
     assert_raises NotFound do
-      Actions::VouchForPost.new(929_022_929_292, champion).run
+      action = Actions::VouchForPost.new(post_id: 929_022_929_292, username: champion.username, notes: 'foo bar')
+      action.run
     end
   end
 
@@ -26,7 +27,7 @@ class TestVouchPost < Minitest::Test
     refute_nil champion
 
     assert_raises BadRequest do
-      Actions::VouchForPost.new(non_anon_post.id, champion.username).run
+      Actions::VouchForPost.new(post_id: non_anon_post.id, username: champion.username, notes: 'foo bar').run
     end
   end
 
@@ -40,7 +41,7 @@ class TestVouchPost < Minitest::Test
     refute regular_user.champion
 
     assert_raises BadRequest do
-      Actions::VouchForPost.new(anon_post.id, regular_user.username).run
+      Actions::VouchForPost.new(post_id: anon_post.id, username: regular_user.username, notes: 'more notes').run
     end
   end
 
@@ -55,10 +56,11 @@ class TestVouchPost < Minitest::Test
     refute_nil champ
     assert champ.champion
 
-    Actions::VouchForPost.new(anon_post.id, champ.username).run
+    Actions::VouchForPost.new(post_id: anon_post.id, username: champ.username, notes: 'foo bar').run
 
     pe = PostEvent.where(post_id: anon_post.id, user_id: champ.id).first
     refute_nil pe
+    assert_equal 'foo bar', pe.notes
     assert pe.post_vouched?
 
     anon_post = Post[anon_post.id] # reload
@@ -67,7 +69,7 @@ class TestVouchPost < Minitest::Test
 
     # Throw error if try to vouch again
     assert_raises BadRequest do
-      Actions::VouchForPost.new(anon_post.id, champ.username).run
+      Actions::VouchForPost.new(post_id: anon_post.id, username: champ.username, notes: 'baz quux').run
     end
   end
 end

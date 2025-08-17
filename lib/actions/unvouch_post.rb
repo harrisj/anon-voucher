@@ -4,9 +4,11 @@ require_relative '../exceptions'
 
 module Actions
   class UnvouchForPost
-    def initialize(post_id, champion_username)
+    def initialize(post_id:, username:, notes:, timestamp: nil)
       @post_id = post_id
-      @champion_username = champion_username
+      @champion_username = username
+      @notes = notes
+      @timestamp = timestamp || Time.now
     end
 
     def run
@@ -21,7 +23,7 @@ module Actions
       raise BadRequest, "Post isn't vouched by this user" unless post.vouched_by?(champ)
 
       pe = PostEvent.new(post_id: post.id, user_id: champ.id,
-                         created_at: Time.now)
+                         notes: @notes, created_at: @timestamp)
       pe.post_unvouched!
       pe.save
 

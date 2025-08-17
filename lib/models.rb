@@ -67,7 +67,7 @@ class PostEvent < Sequel::Model
       'Vouched'
     when POST_UNVOUCHED
       'Unvouched'
-    when EDITED
+    when POST_EDITED
       'Edited'
     end
   end
