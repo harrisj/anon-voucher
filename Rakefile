@@ -1,11 +1,17 @@
 # frozen_string_literal: true
 
-SCRIPTS_DIR = 'app/scripts'
+namespace :db do
+  task :delete do
+    `rm -f db.sqlite`
+  end
 
-task :create_db do
-  ruby "#{SCRIPTS_DIR}/create_db.rb"
-end
+  task create: :delete do
+    require_relative 'lib/tasks/db_create'
+    DB.create_tables
+  end
 
-task :reset_db do
-  ruby "#{SCRIPTS_DIR}/populate_db.rb"
+  task :reseed do
+    require_relative 'lib/tasks/db_seed'
+    DB.reseed
+  end
 end
