@@ -5,7 +5,7 @@ require_relative 'db'
 
 # Represents a user
 class User < Sequel::Model
-  one_to_many :posts
+  one_to_many :posts, graph_join_type: :inner
   one_to_many :post_events
 
   def self.find_username(username)
@@ -15,9 +15,18 @@ end
 
 # Represents a single comment
 class Post < Sequel::Model
-  many_to_one :user
+  many_to_one :user, graph_join_type: :inner
   one_to_many :post_events
   one_to_many :post_vouchers
+
+  # This needs to run with all
+  def self.anonymous
+    Post.eager_graph(:user).where(anonymous: true).all
+  end
+
+  def self.not_anonymous
+    Post.eager_graph(:user).where(anonymous: false).all
+  end
 
   def vouched?
     post_vouchers.any?

@@ -10,6 +10,7 @@ class Database
   end
 
   def reset_all_posts!
+    PostVoucher.truncate
     PostEvent.truncate
     Post.truncate
   end

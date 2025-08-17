@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require_relative '../../lib/exceptions'
+require_relative '../../lib/models'
 require_relative '../../lib/tasks/db_seed'
 require_relative '../../lib/actions/vouch_post'
 
@@ -17,7 +18,7 @@ class TestVouchPost < Minitest::Test
   end
 
   def test_cant_vouch_non_anonymous_post
-    non_anon_post = Post.association_join(:user).where(anonymous: false).first
+    non_anon_post = Post.not_anonymous.first
     refute_nil non_anon_post
     refute non_anon_post.user.anonymous
 
@@ -30,7 +31,7 @@ class TestVouchPost < Minitest::Test
   end
 
   def test_regular_user_cant_vouch
-    anon_post = Post.association_join(:user).where(anonymous: true).first
+    anon_post = Post.anonymous.first
     refute_nil anon_post
     assert anon_post.user.anonymous
 
@@ -44,7 +45,7 @@ class TestVouchPost < Minitest::Test
   end
 
   def test_normal_vouch
-    anon_post = Post.association_join(:user).where(anonymous: true).first
+    anon_post = Post.anonymous.first
     assert anon_post.user
     assert anon_post.user.anonymous
     refute_nil anon_post
@@ -62,10 +63,10 @@ class TestVouchPost < Minitest::Test
 
     anon_post = Post[anon_post.id] # reload
     assert anon_post.vouched?
-    assert anon_post.vouched_by? champion
+    assert anon_post.vouched_by? champ
 
     # Throw error if try to vouch again
-    assert_raise BadRequest do
+    assert_raises BadRequest do
       Actions::VouchForPost.new(anon_post.id, champ.username).run
     end
   end

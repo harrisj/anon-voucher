@@ -13,7 +13,7 @@ get '/timeline/:username' do |username|
   raise NotFound, 'User not found' if user.nil?
 
   posts = Post.order_by(:created_at).all
-  erb :timeline, locals: { posts: posts }
+  erb :timeline, locals: { posts: posts, user: user }
 end
 
 post '/actions/vouch/:id' do |id|
