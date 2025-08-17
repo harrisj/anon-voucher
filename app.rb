@@ -12,7 +12,7 @@ get '/timeline/:username' do |username|
   user = User.find_username(username)
   raise NotFound, 'User not found' if user.nil?
 
-  posts = Post.order_by(:created_at).all
+  posts = Post.order_by(Sequel.desc(:created_at)).all
   erb :timeline, locals: { posts: posts, current_user: user }
 end
 

@@ -29,6 +29,8 @@ module Actions
 
       pv = PostVoucher.where(post_id: post.id, user_id: champ.id).first
       pv.delete
+
+      pe
     end
   end
 end

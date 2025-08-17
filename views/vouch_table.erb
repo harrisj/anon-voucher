@@ -1,17 +1,19 @@
-<table>
+<table class="table">
   <thead>
-    <th>Champion</th>
+    <th>User</th>
     <th>Action</th>
+    <th>Time</th>
     <th>Notes</th>
   </thead>
   <tbody>
     <% post.post_events.each do |pe| %>
       <%# Figure out how I'd want to display edits, etc. too, maybe as a view for all posts? %>
-      <% next unless pe.post_vouched? || pe.post_unvouched %>
+      <%# next unless pe.post_vouched? || pe.post_unvouched? %>
       <tr>
-        <td><% pe.user.display_name %></td>
-        <td><%= pe.display_type %></td>
-        <td><% pe.notes %></td>
+        <td><small><%= pe.user.username %></small></td>
+        <td><small><%= pe.display_type %></small></td>
+        <td><small><%= pe.display_timestamp %></small></td>
+        <td class="is-italic"><small><%= pe.notes %></small></td>
       </tr>
     <% end %>
   </tbody>

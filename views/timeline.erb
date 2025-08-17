@@ -1,6 +1,7 @@
 <h1 class="is-size-3">Timeline for <%= current_user.username %></h1>
+<h2 class="subtitle">Switch to <% User.exclude(id: current_user.id).all.each_with_index do |user, i| %><% if i > 0 %>, <% end %><a href="/timeline/<%= user.username %>"><%= user.username %></a><% end %></h2>
 
-<div class="mt-2">
+<div class="mt-4">
 <% posts.each do |post| %>
   <%= erb :post, locals: { post: post, current_user: current_user } %>
 <% end %>

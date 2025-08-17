@@ -9,17 +9,17 @@
       <p>
         <strong><%= post.user.display_name %></strong> <small>@<%= post.user.username %></small> <small><%= post.display_timestamp %></small>
         <br />
-        <%= post.text %>
+        <%= post.text %></p>
         <% if post.anonymous? %>
-          <br />
+          <p>
           <% if post.vouched? %>
-            <small><i class="fa-solid fa-check"></i> This post is by an anonymous user but has been vouched for by an independent verification champion.</small>
+            <span class="tag is-success"><small><i class="fa-solid fa-check"></i> This post is by an anonymous user but has been vouched for by a trusted champion.</small></span>
             <%= erb :vouch_table, locals: {post: post} %>
           <% else %>
-            <small><i class="fa-solid fa-circle-exclamation"></i> This post is by an anonymous user and its veracity has not been reviewed.</small>
+            <span class="tag is-warning"><small><i class="fa-solid fa-circle-exclamation"></i> This post is by an anonymous user and its veracity has not been reviewed.</small></span>
           <% end %>
+          </p>
         <% end %>
-      </p>
     </div>
     <nav class="level is-mobile">
       <div class="level-left">

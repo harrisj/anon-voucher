@@ -1,4 +1,5 @@
 require_relative '../models'
+require_relative '../actions/create_post'
 require_relative '../actions/vouch_post'
 require 'yaml'
 
@@ -26,12 +27,13 @@ class Database
       next unless user_hash[:posts]
 
       user_hash[:posts].each do |post_hash|
-        p = Post.create(post_hash.except(:vouched).merge(user_id: user.id))
+        p = Actions::CreatePost.new(username: user.username, text: post_hash[:text],
+                                    timestamp: post_hash[:created_at]).run
 
         next unless post_hash[:vouched]
 
         post_hash[:vouched].each do |v|
-          Actions::VouchForPost.new(post_id: p.id, username: user.username, notes: v[:notes], timestamp: v[:created_at])
+          Actions::VouchForPost.new(post_id: p.id, username: v[:user], notes: v[:notes], timestamp: v[:created_at]).run
         end
       end
     end

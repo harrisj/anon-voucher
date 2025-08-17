@@ -6,7 +6,7 @@ require 'dotiw'
 
 # Represents a user
 class User < Sequel::Model
-  one_to_many :posts, graph_join_type: :inner
+  one_to_many :posts, graph_join_type: :inner, order_by: Sequel.desc(:created_at)
   one_to_many :post_events
 
   def self.find_username(username)
@@ -53,21 +53,26 @@ class PostEvent < Sequel::Model
   many_to_one :post
   many_to_one :user
 
+  include DOTIW::Methods
+
   # Types
   POST_CREATED = 1
   POST_VOUCHED = 2
   POST_UNVOUCHED = 3
   POST_EDITED = 4
 
+  def display_timestamp
+    time_ago_in_words(created_at, only: %i[minutes hours days], highest_measure_only: true, compact: true)
+  end
+
   def display_type
-    case event_type
-    when POST_CREATED
+    if post_created?
       'Created'
-    when POST_VOUCHED
+    elsif post_vouched?
       'Vouched'
-    when POST_UNVOUCHED
+    elsif post_unvouched?
       'Unvouched'
-    when POST_EDITED
+    elsif post_edited?
       'Edited'
     end
   end

@@ -33,6 +33,8 @@ module Actions
       pe.save
 
       PostVoucher.create(post_id: post.id, user_id: champ.id)
+
+      pe
     end
   end
 end
