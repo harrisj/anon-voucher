@@ -1,7 +1,7 @@
-<h1 class="is-size-3">Timeline for <%= user.username %></h1>
+<h1 class="is-size-3">Timeline for <%= current_user.username %></h1>
 
 <div class="mt-2">
 <% posts.each do |post| %>
-  <%= erb :post, locals: { post: post } %>
+  <%= erb :post, locals: { post: post, current_user: current_user } %>
 <% end %>
 </div>

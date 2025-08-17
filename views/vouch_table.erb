@@ -1,0 +1,18 @@
+<table>
+  <thead>
+    <th>Champion</th>
+    <th>Action</th>
+    <th>Notes</th>
+  </thead>
+  <tbody>
+    <% post.post_events.each do |pe| %>
+      <%# Figure out how I'd want to display edits, etc. too, maybe as a view for all posts? %>
+      <% next unless pe.post_vouched? || pe.post_unvouched %>
+      <tr>
+        <td><% pe.user.display_name %></td>
+        <td><%= pe.display_type %></td>
+        <td><% pe.notes %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

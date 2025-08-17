@@ -27,7 +27,7 @@ class Database
       foreign_key :post_id, :posts
       foreign_key :user_id, :users
       Integer :event_type, null: false
-      String :metadata
+      String :notes
       DateTime :created_at
     end
 

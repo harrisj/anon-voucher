@@ -2,7 +2,7 @@ require 'sinatra'
 require 'kramdown'
 
 require_relative 'lib/models'
-# require_relative 'lib/actions'
+require_relative 'lib/actions/vouch_post'
 
 get '/' do
   markdown :index
@@ -13,7 +13,7 @@ get '/timeline/:username' do |username|
   raise NotFound, 'User not found' if user.nil?
 
   posts = Post.order_by(:created_at).all
-  erb :timeline, locals: { posts: posts, user: user }
+  erb :timeline, locals: { posts: posts, current_user: user }
 end
 
 post '/actions/vouch/:id' do |id|

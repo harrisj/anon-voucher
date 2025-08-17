@@ -7,22 +7,25 @@
   <div class="media-content">
     <div class="content">
       <p>
-        <strong><%= post.user.display_name %></strong> <small>@<%= post.user.username %></small> <small>FIXME TIME</small>
+        <strong><%= post.user.display_name %></strong> <small>@<%= post.user.username %></small> <small><%= post.display_timestamp %></small>
         <br />
         <%= post.text %>
+        <% if post.anonymous? %>
+          <br />
+          <% if post.vouched? %>
+            <small><i class="fa-solid fa-check"></i> This post is by an anonymous user but has been vouched for by an independent verification champion.</small>
+            <%= erb :vouch_table, locals: {post: post} %>
+          <% else %>
+            <small><i class="fa-solid fa-circle-exclamation"></i> This post is by an anonymous user and its veracity has not been reviewed.</small>
+          <% end %>
+        <% end %>
       </p>
     </div>
     <nav class="level is-mobile">
       <div class="level-left">
-        <a class="level-item">
-          <span class="icon is-small"><i class="fas fa-reply"></i></span>
-        </a>
-        <a class="level-item">
-          <span class="icon is-small"><i class="fas fa-retweet"></i></span>
-        </a>
-        <a class="level-item">
-          <span class="icon is-small"><i class="fas fa-heart"></i></span>
-        </a>
+        <% if post.anonymous? && current_user.champion %>
+        CHAMP CONTROLS
+        <% end %>
       </div>
     </nav>
   </div>
