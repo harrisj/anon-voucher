@@ -14,7 +14,7 @@
           <p>
           <% if post.vouched? %>
             <span class="tag is-success"><small><i class="fa-solid fa-check"></i> This post is by an anonymous user but has been vouched for by a trusted champion.</small></span>
-            <%= erb :vouch_table, locals: {post: post} %>
+            <%= erb :_vouch_table, locals: {post: post} %>
           <% else %>
             <span class="tag is-warning"><small><i class="fa-solid fa-circle-exclamation"></i> This post is by an anonymous user and its veracity has not been reviewed.</small></span>
           <% end %>

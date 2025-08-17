@@ -1,0 +1,6 @@
+<div id="posts-timeline" class="mt-4">
+<%= erb :_write_post_form, locals: { current_user: current_user } %>
+<% posts.each do |post| %>
+  <%= erb :_post, locals: { post: post, current_user: current_user } %>
+<% end %>
+</div>

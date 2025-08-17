@@ -1,0 +1,25 @@
+<article class="media">
+  <figure class="media-left">
+    <p class="image is-64x64">
+      <img src="https://bulma.io/assets/images/placeholders/128x128.png" />
+    </p>
+  </figure>
+  <div class="media-content">
+    <form hx-post="/actions/post" hx-target="#posts-timeline">
+      <!-- HACK: we would not do this with a real app -->
+      <input type="hidden" name="username" value="<%= current_user.username %>">
+    <div class="field">
+      <p class="control">
+        <input type="text" name="content" class="textarea" placeholder="Add a comment..."></input>
+      </p>
+    </div>
+    <nav class="level">
+      <div class="level-left">
+        <div class="level-item">
+          <input class="button is-info" type="submit"></input>
+        </div>
+      </div>
+    </nav>
+  </form>
+  </div>
+</article>
