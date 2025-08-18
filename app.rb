@@ -11,7 +11,10 @@ require_relative 'lib/actions/unvouch_post'
 
 class App < Sinatra::Base
   set :markdown, layout_engine: :erb
-  set :permitted_hosts, ['localhost', 'anon-voucher.fly.dev']
+  set :host_authorization, {
+    permitted_hosts: ['localhost', 'anon-voucher.fly.dev'],
+    message: 'This host is not permitted'
+  }
 
   get '/' do
     markdown :index, layout: :md_layout
