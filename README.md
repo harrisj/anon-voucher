@@ -46,19 +46,18 @@ To keep things simple, I will probably not have a lot of front end code at first
 - **Using fly.io for deployment**
 
 # Running Things Locally
-
-This is a basic Sinatra application running locally. I don't even have Docker running for it yet. That is one of the things I would likely setup for a regular project, especially one with multiple developers, but I didn't want to spend my limited time tweaking Dockerfiles. Sorry!
-
 In order to run this, you'll have to install Ruby locally on your machine (it might already be installed). Then you simply need to try the following commands
 
 ```bash
 bundle install
 rake db:create
 rake db:seed
-bundle exec ruby app.rb
+bundle exec rackup
 ```
 
-This will launch a local Sinatra instance running on http://localhost:4567/
+This will launch a local Sinatra instance running on http://localhost:9292/
+
+Or you can use docker-compose to run the app
 
 # HACK Comments
 Because this is an attempt to create a prototype quickly without using any web frameworks that would help, I am running at full speed with multiple sets of scissors in my hands. This means that there are many examples where I am bypassing how things _should_ be done in favor of what I can do now quickly. In some especially egregious cases, I have tried to put in a special `HACK` comment, but there might be other cases where I have forgotten to explicitly call it out. If you find something that seems wrong, just assume I'm aware of it too! ;)

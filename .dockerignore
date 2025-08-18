@@ -1,0 +1,6 @@
+# flyctl launch added from .gitignore
+**/db.sqlite
+
+# flyctl launch added from .ruby-lsp/.gitignore
+.ruby-lsp/**/*
+fly.toml
