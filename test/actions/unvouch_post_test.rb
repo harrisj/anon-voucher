@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'minitest/autorun'
 require_relative '../../lib/exceptions'
 require_relative '../../lib/tasks/db_seed'

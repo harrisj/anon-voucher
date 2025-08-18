@@ -32,4 +32,4 @@ gem 'rackup', '~> 2.2'
 
 gem 'kramdown', '~> 2.5'
 
-gem "dotiw", "~> 5.3"
+gem 'dotiw', '~> 5.3'

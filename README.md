@@ -29,8 +29,9 @@ This project uses the following components:
 - Minitest for testing
 - Serbea for templating
 - Bulma for the CSS layout
+- HTMX for form submission
 
-To keep things simple, I will probably not have front end code at first for this prototype, sorry!
+To keep things simple, I will probably not have a lot of front end code at first for this prototype, sorry!
 
 # Development Decision Log
 
@@ -40,3 +41,24 @@ To keep things simple, I will probably not have front end code at first for this
 - **Picked Bulma as a CSS framework** it seems pretty decent as a grid layout system and I will likely use its Media Object component in my timeline.
 - **Picked Serbea for templating** I have been doing a lot of work within Bridgetown for a personal site and using the Serbea template engine there
 - **Decided against migrations and auto-loading** these would be part of using Rails or even Hanami, but want to keep things basic and not spend my time setting them up for my project due to limited timespan
+- **Wrote a seed file for loading data** this was useful for testing as well as it will let me give the DB a reset button in a demo
+- **Using HTMX for interactive elements** I've wanted to try it and this seemed like a good application for it
+
+# Running Things Locally
+
+This is a basic Sinatra application running locally. I don't even have Docker running for it yet. That is one of the things I would likely setup for a regular project, especially one with multiple developers, but I didn't want to spend my limited time tweaking Dockerfiles. Sorry!
+
+In order to run this, you'll have to install Ruby locally on your machine (it might already be installed). Then you simply need to try the following commands
+
+```bash
+bundle install
+rake db:create
+rake db:seed
+bunldle exec ruby app.rb
+```
+
+This will launch a local Sinatra instance running on http://localhost:4567/
+
+# HACK Comments
+
+# Possible Future Directions

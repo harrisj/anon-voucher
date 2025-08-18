@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 require 'sinatra'
 require 'kramdown'
 
 require_relative 'lib/models'
 require_relative 'lib/actions/create_post'
 require_relative 'lib/actions/vouch_post'
+require_relative 'lib/actions/unvouch_post'
 
 get '/' do
   markdown :index
@@ -28,11 +31,29 @@ post '/actions/post' do
   erb :_posts_timeline, locals: { posts: posts, current_user: user }
 end
 
-post '/actions/vouch/:id' do |id|
+post '/actions/vouch/:id' do |post_id|
+  notes = params[:notes]
+  username = params[:username]
+  user = User.find_username(username)
+
+  Actions::VouchForPost.new(post_id: post_id, username: username, notes: notes).run
+
+  posts = Post.order_by(Sequel.desc(:created_at)).all
+  erb :_posts_timeline, locals: { posts: posts, current_user: user }
 end
 
-post '/actions/unvouch/:id' do |id|
+post '/actions/unvouch/:id' do |_id|
+  notes = params[:notes]
+  username = params[:username]
+  user = User.find_username(username)
+
+  Actions::UnvouchForPost.new(post_id: post_id, username: username, notes: notes).run
+
+  posts = Post.order_by(Sequel.desc(:created_at)).all
+  erb :_posts_timeline, locals: { posts: posts, current_user: user }
 end
 
-post '/reset' do
+get '/danger/reset' do
+  DB.reseed
+  redirect '/'
 end

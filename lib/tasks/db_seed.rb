@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../models'
 require_relative '../actions/create_post'
 require_relative '../actions/vouch_post'
