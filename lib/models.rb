@@ -9,6 +9,9 @@ class User < Sequel::Model
   one_to_many :posts, graph_join_type: :inner, order_by: Sequel.desc(:created_at)
   one_to_many :post_events
 
+  alias champion? champion
+  alias anonymous? anonymous
+
   def self.find_username(username)
     where(username: username).first
   end
@@ -36,7 +39,7 @@ class Post < Sequel::Model
   end
 
   def anonymous?
-    user.anonymous
+    user.anonymous?
   end
 
   def vouched?

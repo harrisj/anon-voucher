@@ -16,11 +16,12 @@ Currently, this demo is for a system where:
 - Anonymous user messages will be flagged with a warning if not vouched or a checkmark if they are
 - Champion accounts can vouch for anonymous messages
 
-Right now, this system has the following endpoints
-[/timeline/regular_user](/timeline/regular_user) - timeline for a regular user
-[/timeline/anon](/timeline/anon) - timeline for an anonymous user
-[/timeline/champion](/timeline/champion) - timeline for a champion who can vouch for anonymous messages
-[/danger/reset](/danger/reset) - resets the database to what's in the seeded data
+Right now, this system has the following endpoints:
+
+- [/timeline/regular_user](/timeline/regular_user) - timeline for a regular user
+- [/timeline/anon](/timeline/anon) - timeline for an anonymous user
+- [/timeline/champion](/timeline/champion) - timeline for a champion who can vouch for anonymous messages
+- [/danger/reset](/danger/reset) - resets the database to what's in the seeded data
 
 # What Could Be Next
 
@@ -28,6 +29,7 @@ Being a very quick demo/prototype there are some obvious short-cuts that would n
 
 - There is no authentication/authorization in this implementation
 - Code could be better organized into the MVC pattern
+- HTMX usage feels like it could be improved to be less hackish
 - This system would use a persistent data store for messages, etc.
 
 What this doesn't include, but which could be part of a production implementation:

@@ -4,12 +4,15 @@ require 'sinatra'
 require 'kramdown'
 
 require_relative 'lib/models'
+require_relative 'lib/tasks/db_seed'
 require_relative 'lib/actions/create_post'
 require_relative 'lib/actions/vouch_post'
 require_relative 'lib/actions/unvouch_post'
 
+set :markdown, layout_engine: :erb
+
 get '/' do
-  markdown :index
+  markdown :index, layout: :md_layout
 end
 
 get '/timeline/:username' do |username|
@@ -28,7 +31,7 @@ post '/actions/post' do
   Actions::CreatePost.new(username: username, text: content).run
 
   posts = Post.order_by(Sequel.desc(:created_at)).all
-  erb :_posts_timeline, locals: { posts: posts, current_user: user }
+  erb :_posts_timeline, locals: { posts: posts, current_user: user }, layout: false
 end
 
 post '/actions/vouch/:id' do |post_id|
@@ -38,19 +41,19 @@ post '/actions/vouch/:id' do |post_id|
 
   Actions::VouchForPost.new(post_id: post_id, username: username, notes: notes).run
 
-  posts = Post.order_by(Sequel.desc(:created_at)).all
-  erb :_posts_timeline, locals: { posts: posts, current_user: user }
+  post = Post[post_id]
+  erb :_post, locals: { post: post, current_user: user }, layout: false
 end
 
-post '/actions/unvouch/:id' do |_id|
+post '/actions/unvouch/:id' do |post_id|
   notes = params[:notes]
   username = params[:username]
   user = User.find_username(username)
 
   Actions::UnvouchForPost.new(post_id: post_id, username: username, notes: notes).run
 
-  posts = Post.order_by(Sequel.desc(:created_at)).all
-  erb :_posts_timeline, locals: { posts: posts, current_user: user }
+  post = Post[post_id]
+  erb :_post, locals: { post: post, current_user: user }, layout: false
 end
 
 get '/danger/reset' do

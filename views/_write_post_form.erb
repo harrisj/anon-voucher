@@ -5,12 +5,12 @@
     </p>
   </figure>
   <div class="media-content">
-    <form hx-post="/actions/post" hx-target="#posts-timeline">
+    <form hx-post="/actions/post" hx-target="#posts-timeline" hx-swap="outerHTML">
       <!-- HACK: we would not do this with a real app -->
       <input type="hidden" name="username" value="<%= current_user.username %>">
     <div class="field">
       <p class="control">
-        <input type="text" name="content" class="textarea" placeholder="Add a comment..."></input>
+        <textarea name="content" class="textarea" placeholder="Add a comment..."></textarea>
       </p>
     </div>
     <nav class="level">

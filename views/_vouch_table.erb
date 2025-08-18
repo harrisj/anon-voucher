@@ -1,4 +1,4 @@
-<table class="table">
+<table class="table" width="100%">
   <thead>
     <th>User</th>
     <th>Action</th>
@@ -10,11 +10,44 @@
       <%# Figure out how I'd want to display edits, etc. too, maybe as a view for all posts? %>
       <%# next unless pe.post_vouched? || pe.post_unvouched? %>
       <tr>
-        <td><small><%= pe.user.username %></small></td>
-        <td><small><%= pe.display_type %></small></td>
-        <td><small><%= pe.display_timestamp %></small></td>
-        <td class="is-italic"><small><%= pe.notes %></small></td>
+        <td width="10%"><small><%= pe.user.username %></small></td>
+        <td width="20%"><small><%= pe.display_type %></small></td>
+        <td width="10%"><small><%= pe.display_timestamp %></small></td>
+        <td  width="60%" class="is-italic"><small><%= pe.notes %></small></td>
       </tr>
+    <% end %>
+    <% if post.anonymous? && current_user.champion? %>
+      <% if post.vouched_by? current_user %>
+      <tr>
+        <td width="10%"><small><strong>Unvouch?</strong></small></td>
+        <td width="90%" colspan="3">
+          <form hx-post="/actions/unvouch/<%= post.id %>" hx-target="#post-<%= post.id %>" hx-swap="outerHTML">
+            <input type="hidden" name="username" value="<%= current_user.username %>">
+            <div class="field">
+              <p class="control">
+                <textarea rows="2" name="notes" class="textarea is-small" placeholder="Why are you revoking?"></textarea>
+              </p>
+            </div>
+            <input class="button is-info" type="submit"></input>
+          </form>
+        </td>
+      </tr>
+      <% else %>
+      <tr>
+        <td width="10%"><small><strong>Vouch?</strong></small></td>
+        <td width="90%" colspan="3">
+          <form hx-post="/actions/vouch/<%= post.id %>" hx-target="#post-<%= post.id %>" hx-swap="outerHTML">
+            <input type="hidden" name="username" value="<%= current_user.username %>">
+            <div class="field">
+              <p class="control">
+                <textarea rows="2" name="notes" class="textarea is-small" placeholder="Why is this post authentic?"></textarea>
+              </p>
+            </div>
+            <input class="button is-info" type="submit"></input>
+          </form>
+        </td>
+      </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>

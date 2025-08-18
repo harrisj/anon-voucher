@@ -42,7 +42,8 @@ To keep things simple, I will probably not have a lot of front end code at first
 - **Picked Serbea for templating** I have been doing a lot of work within Bridgetown for a personal site and using the Serbea template engine there
 - **Decided against migrations and auto-loading** these would be part of using Rails or even Hanami, but want to keep things basic and not spend my time setting them up for my project due to limited timespan
 - **Wrote a seed file for loading data** this was useful for testing as well as it will let me give the DB a reset button in a demo
-- **Using HTMX for interactive elements** I've wanted to try it and this seemed like a good application for it
+- **Using HTMX for interactive elements** I've wanted to try it and this seemed like a good application for its model of AJAX with DOM replacement of HTML.
+- **Using fly.io for deployment**
 
 # Running Things Locally
 
@@ -54,11 +55,10 @@ In order to run this, you'll have to install Ruby locally on your machine (it mi
 bundle install
 rake db:create
 rake db:seed
-bunldle exec ruby app.rb
+bundle exec ruby app.rb
 ```
 
 This will launch a local Sinatra instance running on http://localhost:4567/
 
 # HACK Comments
-
-# Possible Future Directions
+Because this is an attempt to create a prototype quickly without using any web frameworks that would help, I am running at full speed with multiple sets of scissors in my hands. This means that there are many examples where I am bypassing how things _should_ be done in favor of what I can do now quickly. In some especially egregious cases, I have tried to put in a special `HACK` comment, but there might be other cases where I have forgotten to explicitly call it out. If you find something that seems wrong, just assume I'm aware of it too! ;)
