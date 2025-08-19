@@ -17,8 +17,10 @@
           <% else %>
             <span class="tag is-warning"><small><i class="fa-solid fa-circle-exclamation"></i> This post is by an anonymous user and its veracity has not been reviewed.</small></span>
           <% end %>
+          <% if post.vouched? || current_user.champion? %>
             <%= erb :_vouch_table, locals: {post: post, current_user: current_user } %>
-          </p>
+          <% end %>
+        </p>
         <% end %>
     </div>
   </div>

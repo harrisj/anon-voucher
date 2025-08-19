@@ -29,13 +29,15 @@ class Database
       next unless user_hash[:posts]
 
       user_hash[:posts].each do |post_hash|
+        timestamp = Time.now - ((post_hash[:delta_min] || 0) * 60)
         p = Actions::CreatePost.new(username: user.username, text: post_hash[:text],
-                                    timestamp: post_hash[:created_at]).run
+                                    timestamp: timestamp).run
 
         next unless post_hash[:vouched]
 
         post_hash[:vouched].each do |v|
-          Actions::VouchForPost.new(post_id: p.id, username: v[:user], notes: v[:notes], timestamp: v[:created_at]).run
+          timestamp = Time.now - ((v[:delta_min] || 0) * 60)
+          Actions::VouchForPost.new(post_id: p.id, username: v[:user], notes: v[:notes], timestamp: timestamp).run
         end
       end
     end

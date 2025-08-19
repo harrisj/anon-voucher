@@ -4,16 +4,26 @@
   anonymous: false
   champion: false
   posts:
-  - text: This is just a post!
-    created_at: "2025-08-12 12:32:19.087696 -0400"
-  - text: This is another post!
-    created_at: "2025-08-16 15:20:19.087696 -0400"
+  - text: |-
+      Lorem ipsum dolor sit amet consectetur adipiscing elit. Consectetur adipiscing elit
+      quisque faucibus ex sapien vitae. Ex sapien vitae pellentesque sem placerat in id.
+      Placerat in id cursus mi pretium tellus duis. Pretium tellus duis convallis tempus leo eu
+      aenean.
+    delta_min: 23
+  - text: |-
+      Lorem ipsum dolor sit amet consectetur adipiscing elit. Consectetur adipiscing elit quisque faucibus ex sapien vitae.
+    delta_min: 8
 
 - username: champion
   display_name: Trusted News Organization
   bio: You can trust me. I know how to verify people.
   anonymous: false
   champion: true
+  posts:
+  - text: |-
+      We are looking for useful leaks inside the federal government who can 
+      give us a good picture of what is happening at their agencies.
+    delta_min: 47
 
 - username: anon
   display_name: "[REDACTED]"
@@ -21,11 +31,13 @@
   anonymous: true
   champion: false
   posts:
-  - text: I have some important info to share, but I need to keep my identity a secret
-    created_at: "2025-08-13 15:03:19.087696 -0400"
-  - text: I am an unidentified staffer within the US Department of Agriculture
-    created_at: "2025-08-13 15:03:19.087696 -0400"
+  - text: Things have not been great lately. I'm not sure how much I can keep dealing with all of
+      this nonsense. You wouldn't believe the weird stuff we are being told to do now.
+    delta_min: 87
+  - text: |-
+      I can confirm: staff are being asked to review grants and procurements to see if they include certain keywords that are considered _verboten_ by agency leadership. I have a copy of the list and it includes such generic terms as "equity" or "justice." Unreal...
+    delta_min: 23
     vouched:
     - user: champion
       notes: I have confirmed the user of this account has the proper credentials
-      created_at: "2025-08-13 17:10:19.087696 -0400"
+      delta_min: 17
